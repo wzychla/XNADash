@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework.Audio;
 using System.IO;
 using Microsoft.Xna.Framework.Media;
+using System.Net.Mime;
+using Microsoft.Xna.Framework.Content;
 
 namespace XNADash.Sound
 {
@@ -34,18 +36,23 @@ namespace XNADash.Sound
         {
             get
             {
-                return Directory.GetFiles( Path.Combine( DashGame.ExecutableDirectory, "Sounds" ), "*.mp3" );
+                return new[]
+                {
+                    "GAME1",
+                    "GAME2",
+                    "GAME3"
+                };
             }
         }
 
-        public void PlaySong( int CurrentLevelNumber )
+        public void PlaySong( ContentManager content, int CurrentLevelNumber )
         {
             if ( SongNames.Count() > 0 )
             {
                 int SongIndex = CurrentLevelNumber % SongNames.Count();
-                string SongFileName = string.Format( "file://{0}", SongNames[SongIndex] );
+                string SongFileName = SongNames[SongIndex];
 
-                Song song = Song.FromUri( "Song", new Uri( SongFileName ) );
+                Song song = content.Load<Song>(SongFileName);
                 MediaPlayer.Play(  song );
             }
         }

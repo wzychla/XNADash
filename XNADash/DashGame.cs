@@ -71,7 +71,7 @@ namespace XNADash
             set
             {
                 _currentLevelNumber = value;
-                SoundFactory.Instance.PlaySong( CurrentLevelNumber );
+                SoundFactory.Instance.PlaySong(this.Content, CurrentLevelNumber );
             }
         }
 
@@ -258,7 +258,7 @@ namespace XNADash
             string[] HelpData = 
                 new[] 
                 {
-                    "TorqLight",
+                    "XNADash",
                     "a Heartlight clone",
                     "F1 - Toggle help on/off",
                     "F10 - exit game",

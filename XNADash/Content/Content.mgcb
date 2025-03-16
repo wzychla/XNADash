@@ -20,6 +20,24 @@
 /processorParam:TextureFormat=Compressed
 /build:DefaultSpriteFont.spritefont
 
+#begin GAME1.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:GAME1.ogg
+
+#begin GAME2.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:GAME2.ogg
+
+#begin GAME3.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:GAME3.ogg
+
 #begin smallSpriteFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

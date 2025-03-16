@@ -2,11 +2,20 @@
 
 ## Overview
 
-Years ago, in 2011, I've ported an old DOS game, <a href="https://en.wikipedia.org/wiki/Heartlight_(video_game)">Heartlight</a>, to XNA. The code was written in C#, completely from scratch. All assets are hand-drawn.
+Years ago, in 2011, I've ported an old DOS game, <a href="https://en.wikipedia.org/wiki/Heartlight_(video_game)">Heartlight</a>, to XNA. 
+
+The original is playable using a DOS emulator, can be an online one like the one from ClassicReload. 
+<a href='https://classicreload.com/heartlight.html'>Click here to play the original version</a>.
 
 In 2025, the old code is recompiled in .NET8/Monogame and published here on Github.
 
 ![game](game.png)
+
+## Assets
+
+* the code was written in C#, completely from scratch, in 2011
+* all images are hand-drawn by myself 
+* all songs were written by myself back in 2011, using <a href='https://openmpt.org/'>OpenMPT</a>
 
 ## Status
 
