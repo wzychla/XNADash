@@ -1,0 +1,100 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using XNADash.Textures;
+using XNADash.Sound;
+
+namespace XNADash.BoardBlocks
+{
+    public class PlayerBlock : BaseBlock
+    {
+        protected override GameTexture BlockTexture
+        {
+            get
+            {
+                return this.Tunnels == null ? GameTexture.Player : GameTexture.PTunnel;
+            }
+        }
+
+        public void UpdatePosition( DashBoard Board, Directions Direction )
+        {
+            if ( this.IsSubjectToPhysics ) return; 
+
+            BaseBlock block = this.GetNeighbour( Direction );
+
+            if ( block == null || block.CanBeConsumed )
+                this.MoveTo( Direction );
+            if ( block != null && block.CanBeConsumed )
+            {
+                if ( block is ExitBlock )
+                {
+                    SoundFactory.Instance.RegisterEffect( SoundType.Exit );
+                    return;
+                }
+                if ( block is HeartBlock )
+                {
+                    Board.HeartsEaten++;
+                    SoundFactory.Instance.RegisterEffect( SoundType.Heart );
+                }
+                if ( block is BoomBlock )
+                {
+                    this.ExplodeNeighbour( Directions.None );
+                }
+                if ( block is TunnelBlock )
+                {
+                    this.Tunnels = ( (TunnelBlock)block ).Orientation;
+                }
+                Board.RemoveBlock( block );
+            }
+
+            // przypadki specjalne
+            if ( block != null && block.CanBePushed &&
+                 (
+                     (
+                       Direction == Directions.E &&                 
+                       block.GetNeighbour( Directions.E ) == null
+                      )
+                      ||
+                     (
+                       Direction == Directions.W &&                 
+                       block.GetNeighbour( Directions.W ) == null
+                      )
+                  )
+                )
+            {
+                this.MoveTo( Direction );
+                block.MoveTo( Direction );
+            }
+        }
+
+        public TunnelBlock.TunelOrientation? Tunnels { get; set; }
+
+        /// <summary>
+        /// Gdy jest w tunelu to fizyka porusza nim sama
+        /// </summary>
+        public override void ApplyPhysics()
+        {
+            if ( this.Tunnels != null )
+            {
+                Directions autoMoveDirection = Tunnels.Value == TunnelBlock.TunelOrientation.ToLeft ? Directions.W : Directions.E;
+                BaseBlock neighbour = this.GetNeighbour( autoMoveDirection );
+
+                this.Board.AddBlock( new TunnelBlock( this.Tunnels.Value ) { X = this.X, Y = this.Y } );
+                this.Board.RemoveBlock( neighbour );
+                this.MoveTo( autoMoveDirection );
+
+                if ( !( neighbour is TunnelBlock ) )
+                    this.Tunnels = null;
+            }
+        }
+
+        public override bool IsSubjectToPhysics
+        {
+            get
+            {
+                return this.Tunnels != null;
+            }
+        }
+    }
+}
