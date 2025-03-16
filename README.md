@@ -5,7 +5,7 @@
 Years ago, in 2011, I've ported an old DOS game, <a href="https://en.wikipedia.org/wiki/Heartlight_(video_game)">Heartlight</a>, to XNA. 
 
 The original is playable using a DOS emulator, can be an online one. There are also other remakes, far better than mine.
-<a href='https://letmegooglethat.com/?q=heartlight+play+online'>Click here to play the original version</a>.
+<a href='https://www.google.com/search?q=heartlight+play+online'>Click here to play the original version</a>.
 
 In 2025, the old code is recompiled in .NET8/Monogame and published here on Github.
 
