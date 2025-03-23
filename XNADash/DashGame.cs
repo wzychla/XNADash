@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -28,8 +28,17 @@ namespace XNADash
         const int STATUSSIZE = 30;
         const int FrameSkip  = 8; // 8;
         
-        public int FrameNumber        = 0;
-        public int FrameCount         = 0;
+        /// <summary>
+        /// Increments every frame
+        /// Corresponds to engine frames
+        /// </summary>
+        public int FrameInEngine        = 0;
+
+        /// <summary>
+        /// Increments every [FrameSkip] frames
+        /// Corresponds to game frames
+        /// </summary>
+        public int FrameInGame         = 0;
 
         bool HelpVisible = false;
 
@@ -54,7 +63,7 @@ namespace XNADash
             graphics.ApplyChanges();
 
             Content.RootDirectory = "Content";
-            Window.Title          = "XNADash 0.4 (c) 2011-2025";
+            Window.Title          = "XNADash 0.4 (c) 2011-2025, F1 for help";
 
             RestartSong();
         }
@@ -159,58 +168,74 @@ namespace XNADash
 
             playerDirection = BoardBlocks.Directions.None;
 
-            // warunki na zakoñczenie gry lub planszy
-            if ( board.MustRestart )
-                this.ReloadBoard();
-            if ( board.Completed )
-                this.MoveToNextBoard();
-            if ( state.IsKeyDown( Keys.Escape ) )
-                board.ExplodePlayer();
-
-            // obs³uga klawiatury - pyk
-            if ( !state.IsKeyDown( Keys.Space ) && !prevState.IsKeyDown( Keys.Left ) && state.IsKeyDown( Keys.Left ) )
-                playerKnock = BoardBlocks.Directions.W;
-            if ( !state.IsKeyDown( Keys.Space ) && !prevState.IsKeyDown( Keys.Right ) && state.IsKeyDown( Keys.Right ) )
-                playerKnock = BoardBlocks.Directions.E;
-            if ( !state.IsKeyDown( Keys.Space ) && !prevState.IsKeyDown( Keys.Up ) && state.IsKeyDown( Keys.Up ) )
-                playerKnock = BoardBlocks.Directions.N;
-            if ( !state.IsKeyDown( Keys.Space ) && !prevState.IsKeyDown( Keys.Down ) && state.IsKeyDown( Keys.Down ) )
-                playerKnock = BoardBlocks.Directions.S;
-
-            // obs³uga klawiatury - player
-            if ( state.IsKeyDown( Keys.F10 ) )
-                this.Exit();
-            if ( !prevState.IsKeyDown( Keys.Left ) &&
-                 state.IsKeyDown( Keys.Space ) && state.IsKeyDown( Keys.Left ) )
-                this.MoveToPrevBoard();
-            if ( !prevState.IsKeyDown( Keys.Right ) &&
-                 state.IsKeyDown( Keys.Space ) && state.IsKeyDown( Keys.Right ) )
-                this.MoveToNextBoard();
-            if ( state.IsKeyDown( Keys.F1 ) && !prevState.IsKeyDown( Keys.F1 ) )
-                HelpVisible = !HelpVisible;
-
-            // obs³uga klawiatury - przejscia miêdzy levelami
-            if ( !state.IsKeyDown( Keys.Space ) )
+            // warunki na zakoÅ„czenie gry lub planszy
+            if (board.MustRestart)
             {
-                if ( state.IsKeyDown( Keys.Left ) )
-                    playerDirection = BoardBlocks.Directions.W;
-                else
-                    if ( state.IsKeyDown( Keys.Right ) )
-                        playerDirection = BoardBlocks.Directions.E;
-                    else
-                        if ( state.IsKeyDown( Keys.Up ) )
-                            playerDirection = BoardBlocks.Directions.N;
-                        else
-                            if ( state.IsKeyDown( Keys.Down ) )
-                                playerDirection = BoardBlocks.Directions.S;
+                this.ReloadBoard();
             }
 
-            // update œwiata co x ramek
-            FrameNumber++;
-            if ( FrameNumber >= FrameSkip )
+            if (board.Completed)
             {
-                FrameNumber = 0;
-                FrameCount++;
+                this.CompleteCurrentBoard();
+            }
+            else
+            {
+                if (state.IsKeyDown(Keys.Escape))
+                {
+                    board.ExplodePlayer();
+                }
+
+                // obsÅ‚uga klawiatury - pyk
+                if (!state.IsKeyDown(Keys.Space) && !prevState.IsKeyDown(Keys.Left) && state.IsKeyDown(Keys.Left))
+                    playerKnock = BoardBlocks.Directions.W;
+                if (!state.IsKeyDown(Keys.Space) && !prevState.IsKeyDown(Keys.Right) && state.IsKeyDown(Keys.Right))
+                    playerKnock = BoardBlocks.Directions.E;
+                if (!state.IsKeyDown(Keys.Space) && !prevState.IsKeyDown(Keys.Up) && state.IsKeyDown(Keys.Up))
+                    playerKnock = BoardBlocks.Directions.N;
+                if (!state.IsKeyDown(Keys.Space) && !prevState.IsKeyDown(Keys.Down) && state.IsKeyDown(Keys.Down))
+                    playerKnock = BoardBlocks.Directions.S;
+
+                // obsÅ‚uga klawiatury - player
+                if (state.IsKeyDown(Keys.F10))
+                    this.Exit();
+                if (!prevState.IsKeyDown(Keys.Left) &&
+                     state.IsKeyDown(Keys.Space) && state.IsKeyDown(Keys.Left))
+                {
+                    this.MoveToPrevBoard();
+                }
+                if (!prevState.IsKeyDown(Keys.Right) &&
+                     state.IsKeyDown(Keys.Space) && state.IsKeyDown(Keys.Right))
+                {
+                    this.MoveToNextBoard();
+                }
+                if (state.IsKeyDown(Keys.F1) && !prevState.IsKeyDown(Keys.F1))
+                {
+                    HelpVisible = !HelpVisible;
+                }
+
+                // obsÅ‚uga klawiatury - przejscia miÄ™dzy levelami
+                if (!state.IsKeyDown(Keys.Space))
+                {
+                    if (state.IsKeyDown(Keys.Left))
+                        playerDirection = BoardBlocks.Directions.W;
+                    else
+                        if (state.IsKeyDown(Keys.Right))
+                        playerDirection = BoardBlocks.Directions.E;
+                    else
+                            if (state.IsKeyDown(Keys.Up))
+                        playerDirection = BoardBlocks.Directions.N;
+                    else
+                                if (state.IsKeyDown(Keys.Down))
+                        playerDirection = BoardBlocks.Directions.S;
+                }
+            }
+
+            // update Å›wiata co x ramek
+            FrameInEngine++;
+            if ( FrameInEngine >= FrameSkip )
+            {
+                FrameInEngine = 0;
+                FrameInGame++;
 
                 board.UpdateBoard( gameTime );
 
@@ -264,8 +289,10 @@ namespace XNADash
             spriteBatch.DrawString( smallSpriteFont, levelName, new Vector2( 0, GetWindowSizeY  ), Color.White );
             spriteBatch.DrawString( smallSpriteFont, levelAuthor, new Vector2( 0, GetWindowSizeY + 12 ), Color.White );
 
-            if ( HelpVisible )
+            if (HelpVisible)
+            {
                 DrawHelp();
+            }
         }
 
         private void DrawHelp()
@@ -278,7 +305,7 @@ namespace XNADash
                     "F1 - Toggle help on/off",
                     "F10 - exit game",
                     "Arrow keys - move",
-                    "Spc+L/R - prev/next level",
+                    "Space + left/right - prev/next level",
                     "Escape - restart level",
                 };
 
@@ -293,6 +320,8 @@ namespace XNADash
 
         private void ReloadBoard()
         {
+            _completedBoardFrame = null;
+
             LevelFactory.Instance.Reset();
             board = LevelFactory.Instance.Levels.ElementAt( CurrentLevelNumber );
         }
@@ -300,6 +329,25 @@ namespace XNADash
         private void RestartSong()
         {
             SoundFactory.Instance.PlaySong(this.Content, CurrentLevelNumber);
+        }
+
+        const int CompletedGameShownFrames = 120;
+        int? _completedBoardFrame;
+        private void CompleteCurrentBoard()
+        {
+            if (_completedBoardFrame == null)
+            {
+                _completedBoardFrame = 0;
+            }
+            else
+            {
+                _completedBoardFrame++;
+            }
+
+            if (_completedBoardFrame > CompletedGameShownFrames)
+            {
+                this.MoveToNextBoard();
+            }
         }
 
         private void MoveToNextBoard()

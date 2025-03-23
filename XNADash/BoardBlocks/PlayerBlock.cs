@@ -14,6 +14,8 @@ namespace XNADash.BoardBlocks
         {
             get
             {
+                if (this.Board.Completed) return GameTexture.None;
+
                 return this.Tunnels == null ? GameTexture.Player : GameTexture.PTunnel;
             }
         }

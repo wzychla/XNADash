@@ -14,7 +14,14 @@ namespace XNADash.BoardBlocks
         {
             get
             {
-                return _opened ? GameTexture.ExitOpen : GameTexture.Exit;
+                if (this.Board.Completed)
+                {
+                    return GameTexture.ExitWithPlayer;
+                }
+                else
+                {
+                    return _opened ? GameTexture.ExitOpen : GameTexture.Exit;
+                }
             }
         }
 

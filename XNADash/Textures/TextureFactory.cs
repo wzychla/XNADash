@@ -32,17 +32,27 @@ namespace XNADash.Textures
 
         public Texture2D GetTexture( GameTexture Texture )
         {
-            if ( !_textures.ContainsKey( Texture ) )
-                _textures.Add( Texture, Texture2D.FromStream( _device, File.Open( Path.Combine( DashGame.ExecutableDirectory, string.Format( "Textures\\{0}.png", Texture ) ), FileMode.Open ) ) );
+            if (Texture != GameTexture.None)
+            {
+                if (!_textures.ContainsKey(Texture))
+                {
+                    _textures.Add(Texture, Texture2D.FromStream(_device, File.Open(Path.Combine(DashGame.ExecutableDirectory, string.Format("Textures\\{0}.png", Texture)), FileMode.Open)));
+                }
 
-            return _textures[Texture];
+                return _textures[Texture];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 
     public enum GameTexture 
     { 
+        None,
         Empty, Grass, Wall, SolidWall, Stone, Heart, 
-        Exit, ExitOpen, Player, Bomb, 
-        Boom, 
-        Plasm, Balloon, RTunnel, LTunnel, PTunnel };
+        Exit, ExitOpen, ExitWithPlayer,
+        Player, Bomb, 
+        Boom, Plasm, Balloon, RTunnel, LTunnel, PTunnel };
 }

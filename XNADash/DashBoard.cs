@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using XNADash.BoardBlocks;
+using XNADash.Textures;
 
 namespace XNADash
 {
@@ -128,8 +129,13 @@ namespace XNADash
 
         public void DrawBoard( SpriteBatch spriteBatch, SpriteFont font )
         {
-            foreach ( var block in Blocks )
-                spriteBatch.Draw( block.Texture, new Rectangle( block.X * BLOCKSIZE, block.Y * BLOCKSIZE, BLOCKSIZE, BLOCKSIZE ), Color.White );
+            foreach (var block in Blocks)
+            {
+                if (block.Texture != null)
+                {
+                    spriteBatch.Draw(block.Texture, new Rectangle(block.X * BLOCKSIZE, block.Y * BLOCKSIZE, BLOCKSIZE, BLOCKSIZE), Color.White);
+                }
+            }
         }
     }
 }
