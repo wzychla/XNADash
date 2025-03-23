@@ -24,7 +24,7 @@ Current version: 0.4
 
 There are 70 levels in total. The `LEVELS.HL` file comes from the original. It's a text file that contain all levels. Creating new levels is easy, just edit the text file.
 
-Most levels should be playable. 
+Most levels should be playable. Known issues are described below.
 
 ## Known issues 
 
@@ -39,5 +39,9 @@ There were two issues here:
 * a bomb falling on another falling bomb was still exploding. A pile of falling bombs was exploding in the very same frame.
 * a boom lasted too short so that some bombs were falling prematurely
 
+### Level 21
 
+Current status: unplayable
+
+Bomb timing is still invalid, after going left and down, player is unable to move it.
 
