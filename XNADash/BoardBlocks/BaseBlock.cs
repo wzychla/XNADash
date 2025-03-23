@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using XNADash.Textures;
 using XNADash.Sound;
+using Microsoft.Xna.Framework;
 
 namespace XNADash.BoardBlocks
 {
@@ -31,6 +32,10 @@ namespace XNADash.BoardBlocks
             {
                 return false;
             }
+            set
+            {
+
+            }
         }
 
         public virtual bool CanBePushed
@@ -48,7 +53,6 @@ namespace XNADash.BoardBlocks
                 return true;
             }
         }
-
         public virtual bool TriggersExplosion
         {
             get
@@ -150,12 +154,13 @@ namespace XNADash.BoardBlocks
             }
         }
 
-        protected bool IsFalling = false;
+        public bool IsFalling = false;
+
         private int delayFallW = 0;
         private int delayFallE = 0;
         const int DELAYFALL = 2;
 
-        public virtual void ApplyPhysics()
+        public virtual void ApplyPhysics( GameTime gameTime )
         {
             if ( !this.IsSubjectToPhysics ) return;
 
@@ -237,13 +242,15 @@ namespace XNADash.BoardBlocks
                  neighbour.CanExplode
                 )
             {
+
                 if (  neighbour is BombBlock &&
                     ( Direction == Directions.W || Direction == Directions.E || Direction == Directions.S || Direction == Directions.N )
                     )
                 {
-                    BombBlock bombNeighbour = neighbour as BombBlock;
-                    bombNeighbour.MustExplode = true;
-                    bombNeighbour.Moved       = true;
+                    BombBlock bombNeighbour          = neighbour as BombBlock;
+                    bombNeighbour.MustExplode        = true;
+                    bombNeighbour.Moved              = true;
+                    bombNeighbour.IsSubjectToPhysics = false;
                 }
                 else 
                 {
@@ -251,7 +258,7 @@ namespace XNADash.BoardBlocks
                     this.Board.AddBlock( new BoomBlock() { X = neighbour.X, Y = neighbour.Y } );
                 }
             }
-            if ( neighbour == null )
+            else if ( neighbour == null )
             {
                 this.Board.AddBlock( new BoomBlock() { X = this.X + this.GetNeighbourDeltaX( Direction ), Y = this.Y + this.GetNeighbourDeltaY( Direction ) } );
             }

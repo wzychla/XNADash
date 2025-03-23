@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using XNADash.Textures;
 using XNADash.Sound;
+using Microsoft.Xna.Framework;
 
 namespace XNADash.BoardBlocks
 {
@@ -73,7 +74,7 @@ namespace XNADash.BoardBlocks
         /// <summary>
         /// Gdy jest w tunelu to fizyka porusza nim sama
         /// </summary>
-        public override void ApplyPhysics()
+        public override void ApplyPhysics(GameTime gameTime)
         {
             if ( this.Tunnels != null )
             {

@@ -25,14 +25,27 @@ namespace XNADash
         SpriteFont            defaultSpriteFont;
         SpriteFont            smallSpriteFont;
 
-        const int STATUSSIZE   = 30;
-        const int FrameSkip    = 8;
-        int FrameNumber        = 0;
+        const int STATUSSIZE = 30;
+        const int FrameSkip  = 8; // 8;
+        
+        public int FrameNumber        = 0;
+        public int FrameCount         = 0;
 
         bool HelpVisible = false;
 
+        private static DashGame _instance;
+        public static DashGame Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
         public DashGame()
         {
+            _instance = this;
+
             graphics = new GraphicsDeviceManager( this );
 
             graphics.PreferredBackBufferWidth  = GetWindowSizeX;
@@ -41,7 +54,9 @@ namespace XNADash
             graphics.ApplyChanges();
 
             Content.RootDirectory = "Content";
-            Window.Title          = "XNADash 0.3 (c) 2011-2025";
+            Window.Title          = "XNADash 0.4 (c) 2011-2025";
+
+            RestartSong();
         }
 
         public int GetWindowSizeX
@@ -71,7 +86,6 @@ namespace XNADash
             set
             {
                 _currentLevelNumber = value;
-                SoundFactory.Instance.PlaySong(this.Content, CurrentLevelNumber );
             }
         }
 
@@ -191,13 +205,14 @@ namespace XNADash
                                 playerDirection = BoardBlocks.Directions.S;
             }
 
-            // update œwiata co 6 ramek
+            // update œwiata co x ramek
             FrameNumber++;
             if ( FrameNumber >= FrameSkip )
             {
                 FrameNumber = 0;
+                FrameCount++;
 
-                board.UpdateBoard( gameTime, state );
+                board.UpdateBoard( gameTime );
 
                 if ( playerDirection != BoardBlocks.Directions.None )
                 {
@@ -282,22 +297,33 @@ namespace XNADash
             board = LevelFactory.Instance.Levels.ElementAt( CurrentLevelNumber );
         }
 
+        private void RestartSong()
+        {
+            SoundFactory.Instance.PlaySong(this.Content, CurrentLevelNumber);
+        }
+
         private void MoveToNextBoard()
         {
             CurrentLevelNumber++;
-            if ( CurrentLevelNumber >= LevelFactory.Instance.Levels.Count() )
+            if (CurrentLevelNumber >= LevelFactory.Instance.Levels.Count())
+            {
                 CurrentLevelNumber = 0;
+            }
 
             ReloadBoard();
+            RestartSong();
         }
 
         private void MoveToPrevBoard()
         {
             CurrentLevelNumber--;
-            if ( CurrentLevelNumber < 0 )
-                CurrentLevelNumber = LevelFactory.Instance.Levels.Count()-1;
+            if (CurrentLevelNumber < 0)
+            {
+                CurrentLevelNumber = LevelFactory.Instance.Levels.Count() - 1;
+            }
 
             ReloadBoard();
+            RestartSong();
         }
     }
 }

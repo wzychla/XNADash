@@ -78,18 +78,27 @@ namespace XNADash
             this._blocks.Remove( Block );
         }
 
-        public bool UpdateBoard( GameTime gameTime, KeyboardState state )
+        public bool UpdateBoard( GameTime gameTime )
         {
-            foreach ( var block in Blocks )
+            foreach (var block in Blocks)
+            {
                 block.Moved = false;
+            }
 
-            foreach ( int col in Enumerable.Range( 0, BOARDSIZEX ) )
-                foreach ( int row in Enumerable.Range( 0, BOARDSIZEY ).Reverse() )
+            // kopia
+            var _currentBlocks = Blocks.ToList();
+
+            foreach (int col in Enumerable.Range(0, BOARDSIZEX))
+            {
+                foreach (int row in Enumerable.Range(0, BOARDSIZEY).Reverse())
                 {
-                    var Block = Blocks.Where( b => !b.Moved && b.IsSubjectToPhysics && b.Y == row && b.X == col ).FirstOrDefault();
-                    if ( Block != null )
-                        Block.ApplyPhysics();
+                    var Block = _currentBlocks.Where(b => !b.Moved && b.Y == row && b.X == col).FirstOrDefault();
+                    if (Block != null)
+                    {
+                        Block.ApplyPhysics(gameTime);
+                    }
                 }
+            }
 
             return true;
         }

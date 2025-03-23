@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,7 @@ namespace XNADash.BoardBlocks
             }
         }
 
-        public override void ApplyPhysics()
+        public override void ApplyPhysics(GameTime gameTime)
         {
             BaseBlock s1 = this.GetNeighbour( Directions.S );
             BaseBlock n1 = this.GetNeighbour( Directions.N );

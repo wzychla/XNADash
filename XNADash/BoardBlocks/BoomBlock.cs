@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,15 +41,14 @@ namespace XNADash.BoardBlocks
             }
         }
 
-        const int MAXFRAMES = 3;
-        int Frame = 0;
-        public override void ApplyPhysics()
+        const int MAXFRAMES = 6;
+        private int Frame = 0;
+        public override void ApplyPhysics(GameTime gameTime)
         {
             if ( Frame < MAXFRAMES )
                 Frame++;
             else
             {
-                Frame = 0;
                 this.Board.RemoveBlock( this );
             }
 

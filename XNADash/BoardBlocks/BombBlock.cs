@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using XNADash.Textures;
 using XNADash.Sound;
+using Microsoft.Xna.Framework;
 
 namespace XNADash.BoardBlocks
 {
@@ -17,11 +18,16 @@ namespace XNADash.BoardBlocks
             }
         }
 
+        private bool _isSubjectToPhysics = true;
         public override bool IsSubjectToPhysics
         {
             get
             {
-                return true;
+                return _isSubjectToPhysics;
+            }
+            set
+            {
+                _isSubjectToPhysics = value;
             }
         }
 
@@ -66,14 +72,15 @@ namespace XNADash.BoardBlocks
             this.ExplodeNeighbour( Directions.N );
         }
 
-        public override void ApplyPhysics()
+        public override void ApplyPhysics(GameTime gameTime)
         {
             if ( 
                  this.MustExplode ||
                  (
                    this.IsFalling &&
                    this.GetNeighbour( Directions.S ) != null &&
-                   this.GetNeighbour( Directions.S ).TriggersExplosion 
+                   this.GetNeighbour( Directions.S ).TriggersExplosion &&
+                   !this.GetNeighbour( Directions.S ).IsFalling
                   )
                 )
             {
@@ -82,7 +89,7 @@ namespace XNADash.BoardBlocks
 
             this.CountDown();
 
-            base.ApplyPhysics();
+            base.ApplyPhysics(gameTime);
 
             return;
         }
