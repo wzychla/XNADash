@@ -43,5 +43,11 @@ There were two issues here:
 
 Current status: unplayable
 
-Bomb timing is still invalid, after going left and down, player is unable to move it further.
+Bomb timing is still invalid. 
 
+
+### Level 40
+
+Current status: unplayable
+
+Bomb timing is still invalid. 
