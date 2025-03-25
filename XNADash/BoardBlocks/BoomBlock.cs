@@ -33,6 +33,14 @@ namespace XNADash.BoardBlocks
             }
         }
 
+        public override bool TriggersExplosion
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public override bool CanBeConsumed
         {
             get

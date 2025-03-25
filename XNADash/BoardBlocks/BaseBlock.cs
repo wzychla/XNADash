@@ -168,59 +168,71 @@ namespace XNADash.BoardBlocks
             BaseBlock block = this.GetNeighbour( Directions.S );
             if ( block == null )
             {
-                // bezwarunkowe spadanie
+                // bezwarunkowe spadanie na puste
                 this.MoveTo( Directions.S );
                 IsFalling = true;
 
                 return;
             }
+            /*
+            else if (block is BoomBlock)
+            {
+                // spadanie na boom block
+                this.MoveTo(Directions.S);
+                IsFalling = true;
+
+                this.Board.RemoveBlock(block);
+
+                return;
+            }
+            */
             else
             {
                 // spadł na gracza
-                if ( block is PlayerBlock && this.IsFalling )
+                if (block is PlayerBlock && this.IsFalling)
                 {
-                    block.ExplodeNeighbour( Directions.None );
-                    SoundFactory.Instance.RegisterEffect( SoundType.Stone );
+                    block.ExplodeNeighbour(Directions.None);
+                    SoundFactory.Instance.RegisterEffect(SoundType.Stone);
                 }
-                if ( block is BombBlock && this.IsFalling )
+                if (block is BombBlock && this.IsFalling && !(this is HeartBlock))
                 {
                     ((BombBlock)block).Explode();
-                    SoundFactory.Instance.RegisterEffect( SoundType.Stone );
+                    SoundFactory.Instance.RegisterEffect(SoundType.Stone);
                 }
 
                 // stoi na kamieniu
                 if (
-                     ( block.IsSubjectToPhysics && !block.IsFalling ) ||
-                     ( block.OthersFallFrom ) 
+                     (block.IsSubjectToPhysics && !block.IsFalling) ||
+                     (block.OthersFallFrom)
                     )
                 {
                     // może spaść w prawo - lewo?
-                    if ( this.GetNeighbour( Directions.W ) == null &&
-                         this.GetNeighbour( Directions.SW ) == null &&
-                         ( this.GetNeighbour( Directions.NW ) == null || !this.GetNeighbour( Directions.NW ).IsSubjectToPhysics )
+                    if (this.GetNeighbour(Directions.W) == null &&
+                         this.GetNeighbour(Directions.SW) == null &&
+                         (this.GetNeighbour(Directions.NW) == null || !this.GetNeighbour(Directions.NW).IsSubjectToPhysics)
                         )
                     {
                         delayFallW++;
 
-                        if ( delayFallW >= DELAYFALL )
+                        if (delayFallW >= DELAYFALL)
                         {
-                            this.MoveTo( Directions.W );
+                            this.MoveTo(Directions.W);
                             IsFalling = true;
                             delayFallW = delayFallE = 0;
                         }
 
                         return;
                     }
-                    if ( this.GetNeighbour( Directions.E ) == null &&
-                         this.GetNeighbour( Directions.SE ) == null &&
-                         ( this.GetNeighbour( Directions.NE ) == null || !this.GetNeighbour( Directions.NE ).IsSubjectToPhysics )
+                    if (this.GetNeighbour(Directions.E) == null &&
+                         this.GetNeighbour(Directions.SE) == null &&
+                         (this.GetNeighbour(Directions.NE) == null || !this.GetNeighbour(Directions.NE).IsSubjectToPhysics)
                         )
                     {
                         delayFallE++;
 
-                        if ( delayFallE >= DELAYFALL )
+                        if (delayFallE >= DELAYFALL)
                         {
-                            this.MoveTo( Directions.E );
+                            this.MoveTo(Directions.E);
                             IsFalling = true;
                             delayFallW = delayFallE = 0;
                         }

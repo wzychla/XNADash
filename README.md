@@ -20,7 +20,7 @@ In 2025, the old code is recompiled in .NET8/Monogame and published here on Gith
 	
 ## Status
 
-Current version: 0.5
+Current version: 0.51
 
 There are 70 levels in total. The `LEVELS.HL` file comes from the original. It's a text file that contain all levels. Creating new levels is easy, just edit the text file.
 
@@ -50,4 +50,10 @@ Bomb timing is still invalid.
 
 Current status: unplayable
 
-Bomb timing is still invalid. 
+Bomb timing is still invalid. Bomb probably should be able to fall (and clear) a boom block.
+
+### Level 59
+
+Current status: invalid physics.
+
+Fixed: heart falling on a bomb should not trigger an explosion.
