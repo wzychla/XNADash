@@ -25,6 +25,14 @@ namespace XNADash.BoardBlocks
             }
         }
 
+        public override bool CanExplode
+        {
+            get
+            {
+                return !this.Board.Completed;
+            }
+        }
+
         public void Open()
         {
             this._opened = true;

@@ -25,7 +25,7 @@ namespace XNADash
         SpriteFont            defaultSpriteFont;
         SpriteFont            smallSpriteFont;
 
-        const string CurrentVersion = "0.51";
+        const string CurrentVersion = "0.52";
 
         const int STATUSSIZE = 30;
         const int FrameSkip  = 8; // 8;
@@ -187,7 +187,7 @@ namespace XNADash
                     board.ExplodePlayer();
                 }
 
-                // obsługa klawiatury - pyk
+                // obsługa klawiatury - stuk w klawisz
                 if (!state.IsKeyDown(Keys.Space) && !prevState.IsKeyDown(Keys.Left) && state.IsKeyDown(Keys.Left))
                     playerKnock = BoardBlocks.Directions.W;
                 if (!state.IsKeyDown(Keys.Space) && !prevState.IsKeyDown(Keys.Right) && state.IsKeyDown(Keys.Right))
@@ -220,14 +220,11 @@ namespace XNADash
                 {
                     if (state.IsKeyDown(Keys.Left))
                         playerDirection = BoardBlocks.Directions.W;
-                    else
-                        if (state.IsKeyDown(Keys.Right))
+                    else if (state.IsKeyDown(Keys.Right))
                         playerDirection = BoardBlocks.Directions.E;
-                    else
-                            if (state.IsKeyDown(Keys.Up))
+                    else if (state.IsKeyDown(Keys.Up))
                         playerDirection = BoardBlocks.Directions.N;
-                    else
-                                if (state.IsKeyDown(Keys.Down))
+                    else if (state.IsKeyDown(Keys.Down))
                         playerDirection = BoardBlocks.Directions.S;
                 }
             }
@@ -239,7 +236,7 @@ namespace XNADash
                 FrameInEngine = 0;
                 FrameInGame++;
 
-                board.UpdateBoard( gameTime );
+                board.UpdateBoard(gameTime);
 
                 if ( playerDirection != BoardBlocks.Directions.None )
                 {
@@ -248,11 +245,11 @@ namespace XNADash
                     playerKnock = BoardBlocks.Directions.None;
                 }
                 else
-                    if ( playerKnock != BoardBlocks.Directions.None )
-                    {
-                        board.UpdatePlayer( playerKnock );
-                        playerKnock = BoardBlocks.Directions.None;
-                    }
+                if ( playerKnock != BoardBlocks.Directions.None )
+                {
+                    board.UpdatePlayer( playerKnock );
+                    playerKnock = BoardBlocks.Directions.None;
+                }
 
                 SoundFactory.Instance.PlayEffect();
             }

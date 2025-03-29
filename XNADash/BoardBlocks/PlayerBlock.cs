@@ -42,7 +42,7 @@ namespace XNADash.BoardBlocks
                 }
                 if ( block is BoomBlock )
                 {
-                    this.ExplodeNeighbour( Directions.None );
+                    this.ExplodeNeighbour( Directions.None, true );
                 }
                 if ( block is TunnelBlock )
                 {

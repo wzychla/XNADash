@@ -58,6 +58,9 @@
     <None Update="Textures\Boom.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Textures\BoomSmall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Textures\Empty.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

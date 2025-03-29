@@ -13,9 +13,14 @@ namespace XNADash.BoardBlocks
         {
             get
             {
-                return GameTexture.Boom;
+                return
+                    this.IsBig
+                    ? GameTexture.Boom
+                    : GameTexture.BoomSmall;
             }
         }
+
+        public bool IsBig { get; set; }
 
         public override bool CanExplode
         {
@@ -53,11 +58,11 @@ namespace XNADash.BoardBlocks
         private int Frame = 0;
         public override void ApplyPhysics(GameTime gameTime)
         {
-            if ( Frame < MAXFRAMES )
+            if (Frame < MAXFRAMES)
                 Frame++;
             else
             {
-                this.Board.RemoveBlock( this );
+                this.Board.RemoveBlock(this);
             }
 
             return;

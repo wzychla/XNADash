@@ -52,8 +52,12 @@ Current status: unplayable
 
 Bomb timing is still invalid. Bomb probably should be able to fall (and clear) a boom block.
 
+### Level 42
+
+Current status: unplayable
+
 ### Level 59
 
-Current status: invalid physics.
+Current status: unplayable
 
-Fixed: heart falling on a bomb should not trigger an explosion.
+Partially fixed: heart falling on a bomb should not trigger an explosion.

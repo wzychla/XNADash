@@ -54,5 +54,6 @@ namespace XNADash.Textures
         Empty, Grass, Wall, SolidWall, Stone, Heart, 
         Exit, ExitOpen, ExitWithPlayer,
         Player, Bomb, 
-        Boom, Plasm, Balloon, RTunnel, LTunnel, PTunnel };
+        Boom, BoomSmall,
+        Plasm, Balloon, RTunnel, LTunnel, PTunnel };
 }

@@ -56,8 +56,10 @@ namespace XNADash.BoardBlocks
             }
             set
             {
-                if ( value == true )
+                if (value == true)
+                {
                     this.explodeCount = 1;
+                }
             }
         }
 
@@ -65,11 +67,11 @@ namespace XNADash.BoardBlocks
         {
             SoundFactory.Instance.RegisterEffect( SoundType.Bomb );
 
-            this.ExplodeNeighbour( Directions.None );
-            this.ExplodeNeighbour( Directions.S );
-            this.ExplodeNeighbour( Directions.E );
-            this.ExplodeNeighbour( Directions.W );
-            this.ExplodeNeighbour( Directions.N );
+            this.ExplodeNeighbour( Directions.None, true );
+            this.ExplodeNeighbour( Directions.S, false );
+            this.ExplodeNeighbour( Directions.E, false);
+            this.ExplodeNeighbour( Directions.W, false);
+            this.ExplodeNeighbour( Directions.N, false);
         }
 
         public override void ApplyPhysics(GameTime gameTime)

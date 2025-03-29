@@ -109,7 +109,7 @@ namespace XNADash
             PlayerBlock player = Blocks.OfType<PlayerBlock>().FirstOrDefault();
 
             if ( player != null )
-                player.ExplodeNeighbour( Directions.None );
+                player.ExplodeNeighbour( Directions.None, true );
         }
 
         public bool UpdatePlayer( Directions Direction )

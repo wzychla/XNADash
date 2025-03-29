@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace XNADash.BoardBlocks
 {
-    public class BaseBlock
+    public abstract class BaseBlock
     {
         public int X;
         public int Y;
@@ -165,8 +165,8 @@ namespace XNADash.BoardBlocks
             if ( !this.IsSubjectToPhysics ) return;
 
             // czy pod spodem coś jest?
-            BaseBlock block = this.GetNeighbour( Directions.S );
-            if ( block == null )
+            BaseBlock blockAtS = this.GetNeighbour( Directions.S );
+            if (blockAtS == null )
             {
                 // bezwarunkowe spadanie na puste
                 this.MoveTo( Directions.S );
@@ -175,13 +175,13 @@ namespace XNADash.BoardBlocks
                 return;
             }
             /*
-            else if (block is BoomBlock)
+            else if ( blockAtS is BoomSmallBlock)
             {
                 // spadanie na boom block
                 this.MoveTo(Directions.S);
-                IsFalling = true;
+                IsFalling = false;
 
-                this.Board.RemoveBlock(block);
+                this.Board.RemoveBlock(blockAtS);
 
                 return;
             }
@@ -189,21 +189,22 @@ namespace XNADash.BoardBlocks
             else
             {
                 // spadł na gracza
-                if (block is PlayerBlock && this.IsFalling)
+                if (blockAtS is PlayerBlock && this.IsFalling)
                 {
-                    block.ExplodeNeighbour(Directions.None);
+                    blockAtS.ExplodeNeighbour(Directions.None, true );
                     SoundFactory.Instance.RegisterEffect(SoundType.Stone);
                 }
-                if (block is BombBlock && this.IsFalling && !(this is HeartBlock))
+                // falling heart doesn't cause bombs to explode
+                if (blockAtS is BombBlock && this.IsFalling && !(this is HeartBlock))
                 {
-                    ((BombBlock)block).Explode();
+                    ((BombBlock)blockAtS).Explode();
                     SoundFactory.Instance.RegisterEffect(SoundType.Stone);
                 }
 
                 // stoi na kamieniu
                 if (
-                     (block.IsSubjectToPhysics && !block.IsFalling) ||
-                     (block.OthersFallFrom)
+                     (blockAtS.IsSubjectToPhysics && !blockAtS.IsFalling) ||
+                     (blockAtS.OthersFallFrom)
                     )
                 {
                     // może spaść w prawo - lewo?
@@ -247,14 +248,13 @@ namespace XNADash.BoardBlocks
             return;
         }
 
-        public void ExplodeNeighbour( Directions Direction )
+        public void ExplodeNeighbour( Directions Direction, bool Primary )
         {
             BaseBlock neighbour = this.GetNeighbour( Direction );
             if ( neighbour != null &&
                  neighbour.CanExplode
                 )
             {
-
                 if (  neighbour is BombBlock &&
                     ( Direction == Directions.W || Direction == Directions.E || Direction == Directions.S || Direction == Directions.N )
                     )
@@ -267,12 +267,24 @@ namespace XNADash.BoardBlocks
                 else 
                 {
                     this.Board.RemoveBlock( neighbour );
-                    this.Board.AddBlock( new BoomBlock() { X = neighbour.X, Y = neighbour.Y } );
+                    this.Board.AddBlock(
+                        new BoomBlock() 
+                        { 
+                            X = neighbour.X, 
+                            Y = neighbour.Y, 
+                            IsBig = Primary 
+                        });
                 }
             }
             else if ( neighbour == null )
             {
-                this.Board.AddBlock( new BoomBlock() { X = this.X + this.GetNeighbourDeltaX( Direction ), Y = this.Y + this.GetNeighbourDeltaY( Direction ) } );
+                this.Board.AddBlock(
+                    new BoomBlock()
+                    {
+                        X = this.X + this.GetNeighbourDeltaX(Direction),
+                        Y = this.Y + this.GetNeighbourDeltaY(Direction),
+                        IsBig = Primary
+                    });
             }
 
         }
