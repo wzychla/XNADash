@@ -20,13 +20,32 @@ In 2025, the old code is recompiled in .NET8/Monogame and published here on Gith
 	
 ## Status
 
-Current version: 0.51
+Current version: 0.53
 
 There are 70 levels in total. The `LEVELS.HL` file comes from the original. It's a text file that contain all levels. Creating new levels is easy, just edit the text file.
 
 Most levels should be playable. Known issues are described below.
 
+## Changes
+
+### 0.53
+
+Added the `NullBlock` that lasts 1 frame, placed on a spot where another block fall from. 
+This fixes multiple timing issues, e.g. in Level 10 or Level 12 where a balloon has two blocks on it.
+
 ## Known issues 
+
+### Level 10
+
+Current status: playable.
+
+Timing issues of falling balloons Fixed in 0.53
+
+### Level 12
+
+Current status: playable.
+
+Timing issues of falling balloons Fixed in 0.53
 
 ### Level 13
 
@@ -38,6 +57,12 @@ There were two issues here:
 
 * a bomb falling on another falling bomb was still exploding. A pile of falling bombs was exploding in the very same frame.
 * a boom lasted too short so that some bombs were falling prematurely
+
+### Level 18
+
+Current status: partially playable
+
+If the exit is reached just before the time limit, the exit can be destroyed (and should not be).
 
 ### Level 21
 

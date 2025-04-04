@@ -168,6 +168,13 @@ namespace XNADash.BoardBlocks
             BaseBlock blockAtS = this.GetNeighbour( Directions.S );
             if (blockAtS == null )
             {
+                this.Board.AddBlock(
+                    new NullBlock()
+                    {
+                        X = this.X,
+                        Y = this.Y
+                    });
+
                 // bezwarunkowe spadanie na puste
                 this.MoveTo( Directions.S );
                 IsFalling = true;

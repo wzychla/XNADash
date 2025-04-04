@@ -25,7 +25,7 @@ namespace XNADash
         SpriteFont            defaultSpriteFont;
         SpriteFont            smallSpriteFont;
 
-        const string CurrentVersion = "0.52";
+        const string CurrentVersion = "0.53";
 
         const int STATUSSIZE = 30;
         const int FrameSkip  = 8; // 8;

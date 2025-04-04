@@ -92,6 +92,7 @@ namespace XNADash
             foreach (int col in Enumerable.Range(0, BOARDSIZEX))
             {
                 foreach (int row in Enumerable.Range(0, BOARDSIZEY).Reverse())
+                //foreach (int row in Enumerable.Range(0, BOARDSIZEY))
                 {
                     var Block = _currentBlocks.Where(b => !b.Moved && b.Y == row && b.X == col).FirstOrDefault();
                     if (Block != null)
