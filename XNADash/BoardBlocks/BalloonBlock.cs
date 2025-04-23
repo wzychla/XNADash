@@ -39,13 +39,16 @@ namespace XNADash.BoardBlocks
             BaseBlock n1 = this.GetNeighbour( Directions.N );
 
             // spad w dół - dwa nad nim i nic pod spodem
-            if ( s1 == null && n1 != null && !(n1 is BalloonBlock) && !(n1 is BoomBlock) )
+            if (s1 == null && n1 != null && !(n1 is BalloonBlock) && !(n1 is BoomBlock))
             {
-                BaseBlock n2 = n1.GetNeighbour( Directions.N );
-                if ( n2 != null && !(n2 is BalloonBlock) && !(n2 is BoomBlock) )
+                BaseBlock n2 = n1.GetNeighbour(Directions.N);
+                if (n2 != null && !(n2 is BalloonBlock) && !(n2 is BoomBlock))
                 {
-                    if ( n1.IsSubjectToPhysics && n2.IsSubjectToPhysics )
-                        this.MoveTo( Directions.S );
+                    if (n1.IsSubjectToPhysics && n2.IsSubjectToPhysics && !n2.IsFalling)
+                    {
+                        n1.MoveTo(Directions.S);
+                        this.MoveTo(Directions.S);
+                    }
 
                     return;
                 }
@@ -54,7 +57,7 @@ namespace XNADash.BoardBlocks
             // ruch do góry - nic nad nim
             if ( n1 == null )
             {
-                this.MoveTo( Directions.N );
+                this.MoveTo( Directions.N );             
 
                 return;
             }
@@ -70,13 +73,17 @@ namespace XNADash.BoardBlocks
                        n2 == null 
                     )
                 {
+                    if ( n1 is BombBlock b )
+                    {
+                        b.IsFalling = false;
+                    }
+
                     n1.MoveTo( Directions.N );
                     this.MoveTo( Directions.N );
 
                     return;
                 }
             }
-            return;
         }
     }
 }

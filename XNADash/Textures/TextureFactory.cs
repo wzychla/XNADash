@@ -51,9 +51,11 @@ namespace XNADash.Textures
     public enum GameTexture 
     { 
         None,
-        Empty, Grass, Wall, SolidWall, Stone, Heart, 
+        Empty, Grass, Wall, SolidWall, Stone, 
+        Heart0, Heart1, Heart2, Heart3, 
         Exit, ExitOpen, ExitWithPlayer,
         Player, Bomb, 
         Boom, BoomSmall,
-        Plasm, Balloon, RTunnel, LTunnel, PTunnel };
+        Plasm0, Plasm1, Plasm2, Plasm3, Plasm4, Plasm5, Plasm6, Plasm7,
+        Balloon, RTunnel, LTunnel, PTunnel };
 }

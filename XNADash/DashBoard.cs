@@ -14,7 +14,7 @@ namespace XNADash
     {
         public const int BOARDSIZEX = 20;
         public const int BOARDSIZEY = 12;
-        public const int BLOCKSIZE  = 40;
+        public const int BLOCKSIZE  = 32 * 2;
 
         public int HeartsToComplete { get; private set; }
         public int HeartsEaten { get; set; }
@@ -91,8 +91,7 @@ namespace XNADash
 
             foreach (int col in Enumerable.Range(0, BOARDSIZEX))
             {
-                foreach (int row in Enumerable.Range(0, BOARDSIZEY).Reverse())
-                //foreach (int row in Enumerable.Range(0, BOARDSIZEY))
+                foreach (int row in Enumerable.Range(0, BOARDSIZEY))
                 {
                     var Block = _currentBlocks.Where(b => !b.Moved && b.Y == row && b.X == col).FirstOrDefault();
                     if (Block != null)

@@ -166,33 +166,13 @@ namespace XNADash.BoardBlocks
 
             // czy pod spodem coś jest?
             BaseBlock blockAtS = this.GetNeighbour( Directions.S );
-            if (blockAtS == null )
+            if (blockAtS == null)
             {
-                this.Board.AddBlock(
-                    new NullBlock()
-                    {
-                        X = this.X,
-                        Y = this.Y
-                    });
-
-                // bezwarunkowe spadanie na puste
-                this.MoveTo( Directions.S );
+                this.MoveTo(Directions.S);
                 IsFalling = true;
 
                 return;
             }
-            /*
-            else if ( blockAtS is BoomSmallBlock)
-            {
-                // spadanie na boom block
-                this.MoveTo(Directions.S);
-                IsFalling = false;
-
-                this.Board.RemoveBlock(blockAtS);
-
-                return;
-            }
-            */
             else
             {
                 // spadł na gracza
@@ -210,12 +190,12 @@ namespace XNADash.BoardBlocks
 
                 // stoi na kamieniu
                 if (
-                     (blockAtS.IsSubjectToPhysics && !blockAtS.IsFalling) ||
+                     (blockAtS.IsSubjectToPhysics && !blockAtS.IsFalling && blockAtS is not BalloonBlock) ||
                      (blockAtS.OthersFallFrom)
                     )
                 {
                     // może spaść w prawo - lewo?
-                    if (this.GetNeighbour(Directions.W) == null &&
+                    if ( this.GetNeighbour(Directions.W) == null &&
                          this.GetNeighbour(Directions.SW) == null &&
                          (this.GetNeighbour(Directions.NW) == null || !this.GetNeighbour(Directions.NW).IsSubjectToPhysics)
                         )
@@ -231,7 +211,7 @@ namespace XNADash.BoardBlocks
 
                         return;
                     }
-                    if (this.GetNeighbour(Directions.E) == null &&
+                    if ( this.GetNeighbour(Directions.E) == null &&
                          this.GetNeighbour(Directions.SE) == null &&
                          (this.GetNeighbour(Directions.NE) == null || !this.GetNeighbour(Directions.NE).IsSubjectToPhysics)
                         )

@@ -20,7 +20,7 @@ In 2025, the old code is recompiled in .NET8/Monogame and published here on Gith
 	
 ## Status
 
-Current version: 0.53
+Current version: 0.54
 
 There are 70 levels in total. The `LEVELS.HL` file comes from the original. It's a text file that contain all levels. Creating new levels is easy, just edit the text file.
 
@@ -28,9 +28,15 @@ Most levels should be playable. Known issues are described below.
 
 ## Changes
 
+### 0.54
+
+* dumped the idea of the `NullBlock`, instead changed the order of vertical processing.
+* imported first few board textures from the original game. The goal is to finally
+fix timing issues with correct number of frames for each texture block
+
 ### 0.53
 
-Added the `NullBlock` that lasts 1 frame, placed on a spot where another block fall from. 
+* added the `NullBlock` that lasts 1 frame, placed on a spot where another block fall from. 
 This fixes multiple timing issues, e.g. in Level 10 or Level 12 where a balloon has two blocks on it.
 
 ## Known issues 
@@ -70,6 +76,11 @@ Current status: unplayable
 
 Bomb timing is still invalid. 
 
+### Level 27
+
+Current status: unplayable
+
+Bomb timing is still invalid. 
 
 ### Level 40
 
