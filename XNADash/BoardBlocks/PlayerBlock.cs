@@ -83,8 +83,11 @@ namespace XNADash.BoardBlocks
                 Directions autoMoveDirection = Tunnels.Value == TunnelBlock.TunelOrientation.ToLeft ? Directions.W : Directions.E;
                 BaseBlock neighbour = this.GetNeighbour( autoMoveDirection );
 
-                this.Board.AddBlock( new TunnelBlock( this.Tunnels.Value ) { X = this.X, Y = this.Y } );
                 this.Board.RemoveBlock( neighbour );
+                this.Board.AddBlock(
+                    this.Tunnels.Value == TunnelBlock.TunelOrientation.ToLeft
+                    ? new TunnelLeftBlock() { X = this.X, Y = this.Y }
+                    : new TunnelRightBlock() { X = this.X, Y = this.Y });
                 this.MoveTo( autoMoveDirection );
 
                 if ( !( neighbour is TunnelBlock ) )

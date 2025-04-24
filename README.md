@@ -14,19 +14,23 @@ In 2025, the old code is recompiled in .NET8/Monogame and published here on Gith
 ## Assets
 
 * the code was written in C#, completely from scratch, in 2011
-* all images are hand-drawn by me
+* starting from 0.53, most textures are taken from the original
 * all songs were written by me back in 2011, using <a href='https://openmpt.org/'>OpenMPT</a> 
   (songs are not composed by me, if by any chance you recognize their original author/title, please let me know)
 	
 ## Status
 
-Current version: 0.54
+Current version: 0.55
 
 There are 70 levels in total. The `LEVELS.HL` file comes from the original. It's a text file that contain all levels. Creating new levels is easy, just edit the text file.
 
 Most levels should be playable. Known issues are described below.
 
 ## Changes
+
+### 0.55
+
+* added more textures
 
 ### 0.54
 

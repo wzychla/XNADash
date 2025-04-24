@@ -14,7 +14,14 @@ namespace XNADash.BoardBlocks
         {
             get
             {
-                return GameTexture.Bomb;
+                if (this.explodeCount == 0)
+                {
+                    return GameTexture.Bomb0;
+                }
+                else
+                {
+                    return GameTexture.Bomb1;
+                }
             }
         }
 

@@ -7,20 +7,41 @@ using XNADash.Textures;
 
 namespace XNADash.BoardBlocks
 {
-    public class BoomBlock : BaseBlock
+    public class BoomBlock : BaseAnimatedBlock
     {
+        protected override int MaxAnimationState
+        {
+            get
+            {
+                return 6;
+            }
+        }
+
         protected override GameTexture BlockTexture
         {
             get
             {
-                return
-                    this.IsBig
-                    ? GameTexture.Boom
-                    : GameTexture.BoomSmall;
+                switch ( this.AnimationState )
+                {
+                    case 0:
+                        return GameTexture.Boom0;
+                    case 1:
+                        return GameTexture.Boom1;
+                    case 2:
+                        return GameTexture.Boom2;
+                    case 3:
+                        return GameTexture.Boom3;
+                    case 4:
+                        return GameTexture.Boom2;
+                    case 5:
+                        return GameTexture.Boom1;
+                    case 6:
+                        return GameTexture.Boom0;
+                    default:
+                        throw new ArgumentException("invalid state");
+                }
             }
         }
-
-        public bool IsBig { get; set; }
 
         public override bool CanExplode
         {
@@ -54,18 +75,19 @@ namespace XNADash.BoardBlocks
             }
         }
 
-        const int MAXFRAMES = 6;
-        private int Frame = 0;
+        protected override void AnimationUpdate()
+        {
+            this.AnimationState++;
+        }
+
         public override void ApplyPhysics(GameTime gameTime)
         {
-            if (Frame < MAXFRAMES)
-                Frame++;
-            else
+            this.AnimationUpdate();
+
+            if (this.AnimationState > this.MaxAnimationState)
             {
                 this.Board.RemoveBlock(this);
             }
-
-            return;
         }
     }
 }

@@ -15,9 +15,9 @@ namespace XNADash.Utils
 
         private LocalRandom() { }
 
-        public static int Next( int min, int max )
+        public static int NextInclusive( int min, int max )
         {
-            return r.Next(min, max);
+            return r.Next(min, max+1);
         }
     }
 }

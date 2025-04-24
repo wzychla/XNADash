@@ -6,24 +6,13 @@ using XNADash.Textures;
 
 namespace XNADash.BoardBlocks
 {
-    public class TunnelBlock : BaseBlock
+    public abstract class TunnelBlock : BaseBlock
     {
         public enum TunelOrientation { ToLeft, ToRight };
 
-        public TunelOrientation Orientation { get; private set; }
+        public abstract TunelOrientation Orientation { get; }
 
-        public Directions PointsTo
-        {
-            get
-            {
-                return this.Orientation == TunelOrientation.ToLeft ? Directions.W : Directions.E;
-            }
-        }
-
-        public TunnelBlock( TunelOrientation Orientation )
-        {
-            this.Orientation = Orientation;
-        }
+        public abstract Directions PointsTo { get; }
 
         public override bool CanBeConsumed
         {
@@ -37,20 +26,58 @@ namespace XNADash.BoardBlocks
                 return false;
             }
         }
+    }
+
+    public class TunnelLeftBlock : TunnelBlock
+    {
+        public override TunelOrientation Orientation
+        {
+            get
+            {
+                return TunelOrientation.ToLeft;
+            }
+        }
+
+        public override Directions PointsTo
+        {
+            get
+            {
+                return Directions.W;
+            }
+        }
 
         protected override GameTexture BlockTexture
         {
             get
             {
-                switch ( this.Orientation )
-                {
-                    case TunelOrientation.ToLeft:
-                        return GameTexture.LTunnel;
-                    case TunelOrientation.ToRight:
-                        return GameTexture.RTunnel;
-                    default :
-                        throw new Exception();
-                }
+                return GameTexture.LTunnel;
+            }
+        }
+    }
+
+    public class TunnelRightBlock : TunnelBlock
+    {
+        public override TunelOrientation Orientation
+        {
+            get
+            {
+                return TunelOrientation.ToRight;
+            }
+        }
+
+        public override Directions PointsTo
+        {
+            get
+            {
+                return Directions.E;
+            }
+        }
+
+        protected override GameTexture BlockTexture
+        {
+            get
+            {
+                return GameTexture.RTunnel;
             }
         }
     }

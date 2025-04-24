@@ -10,38 +10,27 @@ using XNADash.Utils;
 namespace XNADash.BoardBlocks
 {
     // 
-    public class HeartBlock : BaseBlock
+    public class HeartBlock : BaseBouncyAnimatedBlock
     {
-        private int _textureState;
-        private int _textureIncrement;
-
-        const int MAXSTATE = 3;
+        protected override int MaxAnimationState
+        {
+            get
+            {
+                return 3;
+            }
+        }
 
         public HeartBlock()
         {
-            this._textureState     = LocalRandom.Next(0, MAXSTATE);
-            this._textureIncrement = 1;
-        }
-
-        public override void ApplyPhysics(GameTime gameTime)
-        {
-            base.ApplyPhysics(gameTime);
-
-            if ( (_textureState == 0 && _textureIncrement == -1 ) ||
-                ( _textureState == MAXSTATE && _textureIncrement == 1 )
-                )
-            {
-                _textureIncrement = -_textureIncrement;
-            }
-
-            this._textureState += _textureIncrement;
+            this.AnimationState     = LocalRandom.NextInclusive(0, this.MaxAnimationState);
+            this.AnimationIncrement = 1;
         }
 
         protected override GameTexture BlockTexture
         {
             get
             {
-                switch (this._textureState)
+                switch (this.AnimationState)
                 {
                     case 0:
                         return GameTexture.Heart0;

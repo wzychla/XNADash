@@ -4,16 +4,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using XNADash.Textures;
+using XNADash.Utils;
 
 namespace XNADash.BoardBlocks
 {
-    public class BalloonBlock : BaseBlock
+    public class BalloonBlock : BaseBouncyAnimatedBlock
     {
+        protected override int MaxAnimationState
+        {
+            get
+            {
+                return 2;
+            }
+        }
+
+        public BalloonBlock()
+        {
+            this.AnimationState     = LocalRandom.NextInclusive(0, this.MaxAnimationState);
+            this.AnimationIncrement = 1;
+        }
         protected override GameTexture BlockTexture
         {
             get
             {
-                return GameTexture.Balloon;
+                switch ( this.AnimationState )
+                {
+                    case 0:
+                        return GameTexture.Balloon0;
+                    case 1:
+                        return GameTexture.Balloon1;
+                    case 2:
+                        return GameTexture.Balloon2;
+                    default:
+                        throw new ArgumentException("invalid state");
+                }
             }
         }
 
@@ -35,6 +59,8 @@ namespace XNADash.BoardBlocks
 
         public override void ApplyPhysics(GameTime gameTime)
         {
+            this.AnimationUpdate();
+
             BaseBlock s1 = this.GetNeighbour( Directions.S );
             BaseBlock n1 = this.GetNeighbour( Directions.N );
 

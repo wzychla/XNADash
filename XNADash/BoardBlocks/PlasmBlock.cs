@@ -7,28 +7,21 @@ using XNADash.Textures;
 
 namespace XNADash.BoardBlocks
 {
-    public class PlasmBlock : BaseBlock
+    public class PlasmBlock : BaseAnimatedBlock
     {
-        private int _textureState;
-
-        const int MAXSTATE = 8;
-
-        public override void ApplyPhysics(GameTime gameTime)
+        protected override int MaxAnimationState
         {
-            base.ApplyPhysics(gameTime);
-
-            this._textureState++;
-
-            if ( this._textureState >= MAXSTATE )
+            get
             {
-                this._textureState = 0;
+                return 8;
             }
         }
+
         protected override GameTexture BlockTexture
         {
             get
             {
-                switch ( this._textureState )
+                switch ( this.AnimationState )
                 {
                     case 0:
                         return GameTexture.Plasm0;

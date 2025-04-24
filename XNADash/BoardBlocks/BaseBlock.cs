@@ -258,8 +258,7 @@ namespace XNADash.BoardBlocks
                         new BoomBlock() 
                         { 
                             X = neighbour.X, 
-                            Y = neighbour.Y, 
-                            IsBig = Primary 
+                            Y = neighbour.Y 
                         });
                 }
             }
@@ -269,11 +268,57 @@ namespace XNADash.BoardBlocks
                     new BoomBlock()
                     {
                         X = this.X + this.GetNeighbourDeltaX(Direction),
-                        Y = this.Y + this.GetNeighbourDeltaY(Direction),
-                        IsBig = Primary
+                        Y = this.Y + this.GetNeighbourDeltaY(Direction)
                     });
             }
 
+        }
+    }
+
+    /// <summary>
+    /// Base block with animated texture where the animation is a cycle
+    /// </summary>
+    public abstract class BaseAnimatedBlock : BaseBlock
+    {
+        protected int AnimationState;
+
+        protected abstract int MaxAnimationState { get; }
+
+        protected virtual void AnimationUpdate()
+        {
+            this.AnimationState++;
+
+            if (this.AnimationState >= this.MaxAnimationState)
+            {
+                this.AnimationState = 0;
+            }
+        }
+
+        public override void ApplyPhysics(GameTime gameTime)
+        {
+            base.ApplyPhysics(gameTime);
+
+            this.AnimationUpdate();
+        }
+    }
+
+    /// <summary>
+    /// Base block with animated texture but the animation goes up and down
+    /// </summary>
+    public abstract class BaseBouncyAnimatedBlock : BaseAnimatedBlock
+    {
+        protected int AnimationIncrement = 1;
+
+        protected override void AnimationUpdate()
+        {
+            if ((this.AnimationState == 0 && this.AnimationIncrement == -1) ||
+                (this.AnimationState == this.MaxAnimationState && this.AnimationIncrement == 1)
+                )
+            {
+                this.AnimationIncrement = -this.AnimationIncrement;
+            }
+
+            this.AnimationState += this.AnimationIncrement;
         }
     }
 

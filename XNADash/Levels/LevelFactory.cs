@@ -137,11 +137,11 @@ namespace XNADash.Levels
                                 break;
 
                             case '<':
-                                board.AddBlock( new TunnelBlock(TunnelBlock.TunelOrientation.ToLeft) { Y = rowNumber, X = colNumber } );
+                                board.AddBlock( new TunnelLeftBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
                             case '>':
-                                board.AddBlock( new TunnelBlock( TunnelBlock.TunelOrientation.ToRight ) { Y = rowNumber, X = colNumber } );
+                                board.AddBlock( new TunnelRightBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
                         }
