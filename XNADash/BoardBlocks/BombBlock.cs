@@ -102,5 +102,10 @@ namespace XNADash.BoardBlocks
 
             return;
         }
+
+        public override string ToString()
+        {
+            return BlockConsts.BOMB.ToString();
+        }
     }
 }

@@ -38,5 +38,10 @@ namespace XNADash.BoardBlocks
             this._opened = true;
             this._canBeConsumed = true;
         }
+
+        public override string ToString()
+        {
+            return BlockConsts.EXIT.ToString();
+        }
     }
 }

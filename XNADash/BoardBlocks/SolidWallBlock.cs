@@ -32,5 +32,10 @@ namespace XNADash.BoardBlocks
             }
         }
 
+        public override string ToString()
+        {
+            return BlockConsts.METAL.ToString();
+        }
+
     }
 }

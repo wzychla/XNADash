@@ -31,5 +31,10 @@ namespace XNADash.BoardBlocks
                 return true;
             }
         }
+
+        public override string ToString()
+        {
+            return BlockConsts.STONE.ToString();
+        }
     }
 }

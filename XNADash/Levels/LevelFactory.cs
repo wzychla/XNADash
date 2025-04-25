@@ -10,13 +10,17 @@ namespace XNADash.Levels
 {
     public class LevelFactory
     {
-        class LevelReader
+        public class LevelReader
         {
             public LevelReader()
             {
             }
 
             List<DashBoard> _levels;
+
+            /// <summary>
+            /// List of all in-game levels
+            /// </summary>
             public List<DashBoard> Levels
             {
                 get
@@ -37,6 +41,7 @@ namespace XNADash.Levels
                                 string line     = null;
                                 bool readsLevel = false;
                                 int  levelNumber = 0;
+
                                 List<string> RowData = new List<string>();
 
                                 while ( ( line = sr.ReadLine() ) != null )
@@ -80,7 +85,16 @@ namespace XNADash.Levels
                 }
             }
 
-            private DashBoard GetBoardFromString( 
+            public DashBoard GetBoardFromString(
+                string LevelName, string LevelAuthor, string RowData)
+            {
+                return GetBoardFromString(LevelName, LevelAuthor, RowData.Split(Environment.NewLine));
+            }
+
+            /// <summary>
+            /// Get Board object from string
+            /// </summary>
+            public DashBoard GetBoardFromString( 
                 string LevelName, string LevelAuthor, string[] RowData )
             {
                 DashBoard board = new DashBoard();
@@ -96,51 +110,51 @@ namespace XNADash.Levels
                     {
                         switch ( cellData )
                         {
-                            case '$':
+                            case BlockConsts.HEART:
                                 board.AddBlock( new HeartBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
-                            case '@':
+                            case BlockConsts.STONE:
                                 board.AddBlock( new StoneBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
-                            case '.':
+                            case BlockConsts.GRASS:
                                 board.AddBlock( new GrassBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
-                            case '*':
+                            case BlockConsts.DWARF:
                                 board.AddBlock( new PlayerBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
-                            case '!':
+                            case BlockConsts.EXIT:
                                 board.AddBlock( new ExitBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
-                            case '0':
+                            case BlockConsts.BALLOON:
                                 board.AddBlock( new BalloonBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
-                            case '&' : case 'B':
+                            case BlockConsts.BOMB : case 'B':
                                 board.AddBlock( new BombBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
-                            case '=':
+                            case BlockConsts.PLASMA:
                                 board.AddBlock( new PlasmBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
-                            case '#' : 
+                            case BlockConsts.WALL : 
                                 board.AddBlock( new WallBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
-                            case '%':
+                            case BlockConsts.METAL :
                                 board.AddBlock( new SolidWallBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
-                            case '<':
+                            case BlockConsts.LTUNNEL:
                                 board.AddBlock( new TunnelLeftBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 
-                            case '>':
+                            case BlockConsts.RTUNNEL :
                                 board.AddBlock( new TunnelRightBlock() { Y = rowNumber, X = colNumber } );
                                 break;
 

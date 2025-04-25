@@ -111,5 +111,10 @@ namespace XNADash.BoardBlocks
                 }
             }
         }
+
+        public override string ToString()
+        {
+            return BlockConsts.BALLOON.ToString();
+        }
     }
 }

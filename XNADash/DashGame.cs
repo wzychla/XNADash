@@ -74,7 +74,7 @@ namespace XNADash
         {
             get
             {
-                return DashBoard.BLOCKSIZE * DashBoard.BOARDSIZEX;
+                return DashBoard.BLOCKSIZE * DashBoard.DEFAULTBOARDSIZEX;
             }
         }
 
@@ -82,7 +82,7 @@ namespace XNADash
         {
             get
             {
-                return DashBoard.BLOCKSIZE * DashBoard.BOARDSIZEY;
+                return DashBoard.BLOCKSIZE * DashBoard.DEFAULTBOARDSIZEY;
             }
         }
 

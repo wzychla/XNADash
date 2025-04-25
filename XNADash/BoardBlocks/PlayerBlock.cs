@@ -102,5 +102,10 @@ namespace XNADash.BoardBlocks
                 return this.Tunnels != null;
             }
         }
+
+        public override string ToString()
+        {
+            return BlockConsts.DWARF.ToString();
+        }
     }
 }

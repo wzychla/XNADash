@@ -53,6 +53,11 @@ namespace XNADash.BoardBlocks
                 return GameTexture.LTunnel;
             }
         }
+
+        public override string ToString()
+        {
+            return BlockConsts.LTUNNEL.ToString();
+        }
     }
 
     public class TunnelRightBlock : TunnelBlock
@@ -79,6 +84,11 @@ namespace XNADash.BoardBlocks
             {
                 return GameTexture.RTunnel;
             }
+        }
+
+        public override string ToString()
+        {
+            return BlockConsts.RTUNNEL.ToString();
         }
     }
 }

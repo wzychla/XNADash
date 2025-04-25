@@ -12,8 +12,35 @@ namespace XNADash
 {
     public class DashBoard
     {
-        public const int BOARDSIZEX = 20;
-        public const int BOARDSIZEY = 12;
+        public const int DEFAULTBOARDSIZEX = 20;
+        public const int DEFAULTBOARDSIZEY = 12;
+
+        private int? _boardSizeX;
+        public int BoardSizeX
+        {
+            get
+            {
+                return _boardSizeX != null ? _boardSizeX.Value : DEFAULTBOARDSIZEX;
+            }
+            set
+            {
+                _boardSizeX = value;
+            }
+        }
+
+        private int? _boardSizeY;
+        public int BoardSizeY
+        {
+            get
+            {
+                return _boardSizeY != null ? _boardSizeY.Value : DEFAULTBOARDSIZEY;
+            }
+            set
+            {
+                _boardSizeY = value;
+            }
+        }
+
         public const int BLOCKSIZE  = 32 * 2;
 
         public int HeartsToComplete { get; private set; }
@@ -21,6 +48,7 @@ namespace XNADash
 
         public string LevelName { get; set; }
         public string LevelAuthor { get; set; }
+
 
         List<BaseBlock> _blocks = new List<BaseBlock>();
         public IEnumerable<BaseBlock> Blocks
@@ -89,9 +117,9 @@ namespace XNADash
             // kopia
             var _currentBlocks = Blocks.ToList();
 
-            foreach (int col in Enumerable.Range(0, BOARDSIZEX))
+            foreach (int col in Enumerable.Range(0, this.BoardSizeX))
             {
-                foreach (int row in Enumerable.Range(0, BOARDSIZEY))
+                foreach (int row in Enumerable.Range(0, this.BoardSizeY))
                 {
                     var Block = _currentBlocks.Where(b => !b.Moved && b.Y == row && b.X == col).FirstOrDefault();
                     if (Block != null)
@@ -136,6 +164,37 @@ namespace XNADash
                     spriteBatch.Draw(block.Texture, new Rectangle(block.X * BLOCKSIZE, block.Y * BLOCKSIZE, BLOCKSIZE, BLOCKSIZE), Color.White);
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+
+            // kopia
+            var _currentBlocks = Blocks.ToList();
+
+            foreach (int row in Enumerable.Range(0, this.BoardSizeY))
+            {
+                foreach (int col in Enumerable.Range(0, this.BoardSizeX))
+                {
+                    var Block = _currentBlocks.Where(b => b.Y == row && b.X == col).FirstOrDefault();
+                    if (Block != null)
+                    {
+                        sb.Append(Block.ToString());
+                    }
+                    else
+                    {
+                        sb.Append(' ');
+                    }
+                }
+
+                if (row < this.BoardSizeY - 1)
+                {
+                    sb.AppendLine();
+                }
+            }
+
+            return sb.ToString();
         }
     }
 }

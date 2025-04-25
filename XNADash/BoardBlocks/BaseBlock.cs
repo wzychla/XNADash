@@ -95,18 +95,21 @@ namespace XNADash.BoardBlocks
             int NewX = this.X + dX;
             int NewY = this.Y + dY;
 
-            if ( NewX < 0 || NewX > DashBoard.BOARDSIZEX - 1 ||
-                 NewY < 0 || NewY > DashBoard.BOARDSIZEY - 1
+            if (NewX < 0 || NewX > this.Board.BoardSizeX - 1 ||
+                NewY < 0 || NewY > this.Board.BoardSizeY - 1
                 )
-                return new OutOfBoardBlock();
+            {
+                return new OutOfBoardBlock() { Board = this.Board };
+            }
 
-            return Board.Blocks
-                .Where(
-                    b =>
-                        b.X == NewX &&
-                        b.Y == NewY
-                    )
-                .FirstOrDefault();
+            return 
+                this.Board.Blocks
+                    .Where(
+                        b =>
+                            b.X == NewX &&
+                            b.Y == NewY
+                        )
+                    .FirstOrDefault();
         }
 
         public void MoveTo( Directions Direction )
@@ -299,6 +302,11 @@ namespace XNADash.BoardBlocks
             base.ApplyPhysics(gameTime);
 
             this.AnimationUpdate();
+        }
+
+        public override string ToString()
+        {
+            return " ";
         }
     }
 
