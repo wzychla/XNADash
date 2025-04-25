@@ -174,7 +174,7 @@ namespace XNADash.UnitTests.PhysicsTests
 
             var board = new LevelFactory.LevelReader().GetBoardFromString(null, null, sourceBoard);
 
-            var numberOfUpdates = 20;
+            var numberOfUpdates = 29;
 
             // act
 

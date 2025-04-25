@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using XNADash.Textures;
 
 namespace XNADash.BoardBlocks
 {
-    public abstract class TunnelBlock : BaseBlock
+    public abstract class TunnelBlock : BaseAnimatedBlock
     {
         public enum TunelOrientation { ToLeft, ToRight };
 
@@ -30,6 +31,14 @@ namespace XNADash.BoardBlocks
 
     public class TunnelLeftBlock : TunnelBlock
     {
+        protected override int MaxAnimationState
+        {
+            get
+            {
+                return 4;
+            }
+        }
+
         public override TunelOrientation Orientation
         {
             get
@@ -50,7 +59,19 @@ namespace XNADash.BoardBlocks
         {
             get
             {
-                return GameTexture.LTunnel;
+                switch ( this.AnimationState )
+                {
+                    case 0:
+                        return GameTexture.LTunnel0;
+                    case 1:
+                        return GameTexture.LTunnel1;
+                    case 2:
+                        return GameTexture.LTunnel2;
+                    case 3:
+                        return GameTexture.LTunnel3;
+                    default:
+                        throw new ArgumentException("invalid state");
+                }
             }
         }
 
@@ -62,6 +83,14 @@ namespace XNADash.BoardBlocks
 
     public class TunnelRightBlock : TunnelBlock
     {
+        protected override int MaxAnimationState
+        {
+            get
+            {
+                return 4;
+            }
+        }
+
         public override TunelOrientation Orientation
         {
             get
@@ -82,7 +111,19 @@ namespace XNADash.BoardBlocks
         {
             get
             {
-                return GameTexture.RTunnel;
+                switch (this.AnimationState)
+                {
+                    case 0:
+                        return GameTexture.RTunnel0;
+                    case 1:
+                        return GameTexture.RTunnel1;
+                    case 2:
+                        return GameTexture.RTunnel2;
+                    case 3:
+                        return GameTexture.RTunnel3;
+                    default:
+                        throw new ArgumentException("invalid state");
+                }
             }
         }
 

@@ -16,7 +16,12 @@ namespace XNADash.BoardBlocks
             {
                 if (this.Board.Completed) return GameTexture.None;
 
-                return this.Tunnels == null ? GameTexture.Player : GameTexture.PTunnel;
+                return
+                    this.Tunnels == null
+                    ? GameTexture.Player
+                    : ( this.Tunnels.Value == TunnelBlock.TunelOrientation.ToLeft
+                        ? GameTexture.PLTunnel
+                        : GameTexture.PRTunnel);
             }
         }
 

@@ -59,5 +59,8 @@ namespace XNADash.Textures
         Boom0, Boom1, Boom2, Boom3,
         Plasm0, Plasm1, Plasm2, Plasm3, Plasm4, Plasm5, Plasm6, Plasm7,
         Balloon0, Balloon1, Balloon2,
-        RTunnel, LTunnel, PTunnel };
+        RTunnel0, RTunnel1, RTunnel2, RTunnel3,
+        LTunnel0, LTunnel1, LTunnel2, LTunnel3,
+        PRTunnel, PLTunnel
+    };
 }

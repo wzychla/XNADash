@@ -159,6 +159,14 @@ namespace XNADash.BoardBlocks
 
         public bool IsFalling = false;
 
+        public bool IsAlmostFalling
+        {
+            get
+            {
+                return delayFallE > 0 || delayFallW > 0;
+            }
+        }
+
         private int delayFallW = 0;
         private int delayFallE = 0;
         const int DELAYFALL = 2;
@@ -193,12 +201,17 @@ namespace XNADash.BoardBlocks
 
                 // stoi na kamieniu
                 if (
-                     (blockAtS.IsSubjectToPhysics && !blockAtS.IsFalling && blockAtS is not BalloonBlock) ||
+                     (blockAtS.IsSubjectToPhysics && 
+                     !blockAtS.IsFalling && 
+                      blockAtS is not BalloonBlock 
+                      ) 
+                      ||
                      (blockAtS.OthersFallFrom)
                     )
                 {
                     // może spaść w prawo - lewo?
-                    if ( this.GetNeighbour(Directions.W) == null &&
+                    if ( 
+                         this.GetNeighbour(Directions.W) == null &&
                          this.GetNeighbour(Directions.SW) == null &&
                          (this.GetNeighbour(Directions.NW) == null || !this.GetNeighbour(Directions.NW).IsSubjectToPhysics)
                         )
@@ -209,12 +222,13 @@ namespace XNADash.BoardBlocks
                         {
                             this.MoveTo(Directions.W);
                             IsFalling = true;
-                            delayFallW = delayFallE = 0;
+                            delayFallW = delayFallE = blockAtS.IsAlmostFalling ? 1 : 0;
                         }
 
                         return;
                     }
-                    if ( this.GetNeighbour(Directions.E) == null &&
+                    if (
+                         this.GetNeighbour(Directions.E) == null &&
                          this.GetNeighbour(Directions.SE) == null &&
                          (this.GetNeighbour(Directions.NE) == null || !this.GetNeighbour(Directions.NE).IsSubjectToPhysics)
                         )
@@ -225,7 +239,7 @@ namespace XNADash.BoardBlocks
                         {
                             this.MoveTo(Directions.E);
                             IsFalling = true;
-                            delayFallW = delayFallE = 0;
+                            delayFallW = delayFallE = blockAtS.IsAlmostFalling ? 1 : 0;
                         }
 
                         return;
