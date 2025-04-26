@@ -24,6 +24,14 @@ namespace XNADash.BoardBlocks
             }
         }
 
+        public override bool CanBeConsumedOverTheTunnel
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         public override bool TriggersExplosion
         {
             get

@@ -26,13 +26,18 @@ make sure the physics behaves just like the original.
 	
 ## Status
 
-Current version: 0.56
+Current version: 0.57
 
 There are 70 levels in total. The `LEVELS.HL` file comes from the original. It's a text file that contain all levels. Creating new levels is easy, just edit the text file.
 
 Most levels should be playable. Known issues are described below.
 
 ## Changes
+
+### 0.57
+
+* fixed issues 5 and 6
+* added exit door texture
 
 ### 0.56
 
@@ -57,59 +62,45 @@ This fixes multiple timing issues, e.g. in Level 10 or Level 12 where a balloon 
 
 ## Known issues 
 
-### Level 10
+1. Falling bomb currently is blocked by previous explosion and slides of it. Investigate how other blocks should behave
 
-Current status: playable.
+Occurs: level 5  
+Status: pending  
+Added: 2025-04-26  
+Modified: none
 
-Timing issues of falling balloons Fixed in 0.53
+2. Explosions tiggered around are currently invalid, the north and west explosion should be off by 1 frame as in original
 
-### Level 12
+Occurs: multiple levels  
+Status: pending  
+Added: 2025-04-26  
+Modified: none
 
-Current status: playable.
+3. Two blocks that cause balloon falling should stick together. Repeatable on level 12 when you consume the grass and blocks fall down.  Currently the top block incorrectly slides off which is invalid
 
-Timing issues of falling balloons Fixed in 0.53
+Occurs: level 12  
+Status: pending  
+Added: 2025-04-26  
+Modified: none
 
-### Level 13
+4. Falling bomb should correctly explode a stone on level 25. Currently, the bomb explodes because of the top stone falling on it rather than 
+  because it falls on the stone below it
 
-Current status: playable.
+Occurs: level 25  
+Status: pending  
+Added: 2025-04-26  
+Modified: none
 
-Fixed in 0.4.
+5. Heart at the end of a tunnel should block the player from entering the tunnel
 
-There were two issues here:
+Occurs: level 29  
+Status: fixed
+Added: 2025-04-26  
+Modified: 2025-04-26  
 
-* a bomb falling on another falling bomb was still exploding. A pile of falling bombs was exploding in the very same frame.
-* a boom lasted too short so that some bombs were falling prematurely
+6. A tunnel should withstand a bomb exploding nearby
 
-### Level 18
-
-Current status: partially playable
-
-If the exit is reached just before the time limit, the exit can be destroyed (and should not be).
-
-### Level 21
-
-Current status: unplayable
-
-Bomb timing is still invalid. 
-
-### Level 27
-
-Current status: unplayable
-
-Bomb timing is still invalid. 
-
-### Level 40
-
-Current status: unplayable
-
-Bomb timing is still invalid. Bomb probably should be able to fall (and clear) a boom block.
-
-### Level 42
-
-Current status: unplayable
-
-### Level 59
-
-Current status: unplayable
-
-Partially fixed: heart falling on a bomb should not trigger an explosion.
+Occurs: level 29  
+Status: fixed 
+Added: 2025-04-26  
+Modified: 2025-04-26

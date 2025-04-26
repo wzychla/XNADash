@@ -19,11 +19,33 @@ namespace XNADash.BoardBlocks
         {
             get
             {
-                BaseBlock neighbour = this.GetNeighbour( this.PointsTo );
+                BaseBlock neighbourAtTheEnd = this.GetNeighbour( this.PointsTo );
+                while ( neighbourAtTheEnd is TunnelBlock )
+                {
+                    neighbourAtTheEnd = neighbourAtTheEnd.GetNeighbour(this.PointsTo);
+                }
 
-                if ( neighbour == null || neighbour.CanBeConsumed )
+                if (neighbourAtTheEnd == null || neighbourAtTheEnd.CanBeConsumedOverTheTunnel)
+                {
                     return true;
+                }
 
+                return false;
+            }
+        }
+
+        public override bool OthersFallFrom
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        public override bool CanExplode
+        {
+            get
+            {
                 return false;
             }
         }

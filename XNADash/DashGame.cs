@@ -25,8 +25,6 @@ namespace XNADash
         SpriteFont            defaultSpriteFont;
         SpriteFont            smallSpriteFont;
 
-        const string CurrentVersion = "0.56";
-
         const int STATUSSIZE = 30;
         const int FrameSkip  = 8; // 8;
         
@@ -65,7 +63,6 @@ namespace XNADash
             graphics.ApplyChanges();
 
             Content.RootDirectory = "Content";
-            Window.Title          = $"XNADash {CurrentVersion} (c) 2011-2025, F1 for help";
 
             RestartSong();
         }

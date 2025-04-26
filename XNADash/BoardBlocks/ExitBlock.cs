@@ -36,7 +36,7 @@ namespace XNADash.BoardBlocks
         public void Open()
         {
             this._opened = true;
-            this._canBeConsumed = true;
+            this.CanBeConsumed = true;
         }
 
         public override string ToString()

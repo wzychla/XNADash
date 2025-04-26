@@ -17,14 +17,9 @@ namespace XNADash.BoardBlocks
 
         public DashBoard Board { get; set; }
 
-        protected bool _canBeConsumed = false;
-        public virtual bool CanBeConsumed
-        {
-            get
-            {
-                return _canBeConsumed;
-            }
-        }
+        public virtual bool CanBeConsumed { get; set; }
+
+        public virtual bool CanBeConsumedOverTheTunnel { get; }
 
         public virtual bool IsSubjectToPhysics
         {
