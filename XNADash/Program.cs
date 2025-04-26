@@ -4,7 +4,7 @@ namespace XNADash
 {
     static class Program
     {
-        public const string CurrentVersion = "0.57";
+        public const string CurrentVersion = "0.58";
 
         /// <summary>
         /// The main entry point for the application.
